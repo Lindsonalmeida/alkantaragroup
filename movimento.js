@@ -24,3 +24,5 @@ document.querySelectorAll('.ph').forEach(p=>g.from(p,{clipPath:'inset(18% 8% 18%
 document.querySelectorAll('.div-card,.case,.val').forEach((c,i)=>{c.classList.add('on');c.style.transition='none';g.fromTo(c,{y:60,opacity:0},{y:0,opacity:1,duration:.9,delay:(i%4)*.08,ease:'power3.out',scrollTrigger:{trigger:c,start:'top 92%'}})});
 const gig=document.querySelector('.gigante');if(gig)g.from(gig,{yPercent:40,ease:'none',scrollTrigger:{trigger:gig,start:'top bottom',end:'bottom bottom',scrub:true}})};
 if(document.readyState==='complete')go();else addEventListener('load',go)})();
+/* vídeos das divisões (Gemini/Veo, 16/11) */
+(()=>{document.querySelectorAll('.ph[data-img*="div-"]').forEach(el=>{const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='metadata';v.poster=el.dataset.img;v.src=el.dataset.img.replace('.jpg','.mp4');v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';el.querySelector('.ph-in').appendChild(v);el.classList.add('ok');new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?v.play().catch(()=>{}):v.pause())).observe(el)})})();
