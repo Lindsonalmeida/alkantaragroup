@@ -113,3 +113,9 @@ body.ok .pre{opacity:0;visibility:hidden}
 .troca{position:fixed;inset:0;background:#0B0C0E;z-index:300;transform:scaleY(0);transform-origin:bottom;pointer-events:none}
 .sai .troca{transition:transform .5s cubic-bezier(.7,0,.2,1);transform:scaleY(1)}
 .split .w{display:inline-block;overflow:hidden;vertical-align:top}.split .w>span{display:inline-block}
+/* imagens do Gemini (16/11) */
+.hero:has(.hero-vid){background:#0B0C0E}
+.hero .hero-vid.on~.hero-t{text-shadow:0 2px 24px rgba(0,0,0,.6)}
+.hero:has(.hero-vid)::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(11,12,14,.85) 0%,rgba(11,12,14,.35) 55%,rgba(11,12,14,.1)),linear-gradient(0deg,#0B0C0E 0%,transparent 40%);pointer-events:none}
+@media (max-width:700px){.hero:has(.hero-vid){background:#0B0C0E url(f/hero-cel.jpg) center top/cover no-repeat}}
+#k3d{z-index:1}
