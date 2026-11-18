@@ -17,7 +17,7 @@ const tr=document.createElement('div');tr.className='troca';document.body.append
 document.querySelectorAll('a[href$=".html"],a[href="./"]').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||a.target)return;e.preventDefault();document.body.classList.add('sai');setTimeout(()=>location.href=a.href,450)}));
 addEventListener('pageshow',()=>document.body.classList.remove('sai'));
 const go=()=>{if(red||!window.gsap)return;const g=window.gsap;if(window.ScrollTrigger)g.registerPlugin(ScrollTrigger);
-if(window.Lenis){const l=new Lenis({lerp:.1,smoothWheel:true});l.on('scroll',()=>window.ScrollTrigger&&ScrollTrigger.update());g.ticker.add(t=>l.raf(t*1000));g.ticker.lagSmoothing(0)}
+
 document.querySelectorAll('.h-l').forEach(h=>{g.fromTo(h,{yPercent:30,opacity:0},{yPercent:0,opacity:1,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 88%'}})});
 document.querySelectorAll('.ph.par .ph-in').forEach(p=>g.to(p,{yPercent:12,ease:'none',scrollTrigger:{trigger:p.parentNode,start:'top bottom',end:'bottom top',scrub:true}}));
 document.querySelectorAll('.ph').forEach(p=>g.from(p,{clipPath:'inset(18% 8% 18% 8%)',duration:1.4,ease:'expo.out',scrollTrigger:{trigger:p,start:'top 85%'}}));
@@ -35,3 +35,8 @@ document.querySelectorAll('.mv[data-m]').forEach(el=>{const src=el.dataset.m,box
 addEventListener('load',()=>{if(red||!window.gsap||!window.ScrollTrigger||innerWidth<800)return;const t=document.querySelector('.vida-trilho');if(!t)return;
  gsap.to(t,{x:()=>-(t.scrollWidth-innerWidth+40),ease:'none',scrollTrigger:{trigger:'.vida',start:'top top',end:()=>'+='+(t.scrollWidth),pin:true,scrub:1,invalidateOnRefresh:true}});
  gsap.from('.tec-t',{y:80,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'.tec',start:'top 60%'}})})})();
+/* v4.1 (conta Pedro, 18/11): mídia que ainda não chegou usa uma imagem já existente; nome de arquivo nunca aparece */
+(()=>{const FB={'vida-maos.mp4':'f/div-labs.mp4','vida-estudio.mp4':'f/div-media.mp4','tec-nucleo.mp4':'f/hero-pedra.mp4','tec-holograma.mp4':'f/case-labs.jpg','materia-latao.mp4':'f/div-barzakh.mp4','final-horizonte.mp4':'f/div-ventures.mp4'};
+document.querySelectorAll('.mv[data-m]').forEach(el=>{const n=el.dataset.m.split('/').pop();if(!FB[n])return;
+ fetch(el.dataset.m,{method:'HEAD'}).then(r=>{if(r.ok&&(r.headers.get('content-type')||'').match(/video|image/))return;const box=el.querySelector('.ph-in');box.innerHTML='';const s=FB[n];
+  if(s.endsWith('.mp4')){const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.src=s;box.appendChild(v);v.play().catch(()=>{})}else box.style.backgroundImage='url('+s+')';el.classList.add('ok')}).catch(()=>{})})})();
