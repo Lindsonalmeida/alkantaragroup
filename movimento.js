@@ -12,7 +12,7 @@ const f=document.querySelector('.foto-slz .foto-in');if(f){const g=()=>{const r=
 (()=>{const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const tenta=(src,ok)=>{const i=new Image();i.onload=()=>ok(src);i.src=src};
 document.querySelectorAll('[data-img]').forEach(el=>tenta(el.dataset.img,s=>{const a=el.querySelector('.ph-in')||el;a.style.backgroundImage='url('+s+')';el.classList.add('ok')}));
-const v=document.querySelector('.hero-vid');if(v&&!red&&innerWidth>700){fetch(v.dataset.vid,{method:'HEAD'}).then(r=>{if(r.ok&&(r.headers.get('content-type')||'').includes('video')){v.src=v.dataset.vid;v.play().then(()=>v.classList.add('on')).catch(()=>{})}}).catch(()=>{})}
+const v=document.querySelector('.hero-vid');if(v&&!red&&innerWidth>700){const tv=(u,nx)=>fetch(u,{method:'HEAD'}).then(r=>{if(r.ok&&(r.headers.get('content-type')||'').includes('video')){v.src=u;v.play().then(()=>v.classList.add('on')).catch(()=>{})}else if(nx)tv(nx)}).catch(()=>nx&&tv(nx));tv(v.dataset.vid,v.dataset.alt)}
 const tr=document.createElement('div');tr.className='troca';document.body.appendChild(tr);
 document.querySelectorAll('a[href$=".html"],a[href="./"]').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||a.target)return;e.preventDefault();document.body.classList.add('sai');setTimeout(()=>location.href=a.href,450)}));
 addEventListener('pageshow',()=>document.body.classList.remove('sai'));
@@ -26,3 +26,12 @@ const gig=document.querySelector('.gigante');if(gig)g.from(gig,{yPercent:40,ease
 if(document.readyState==='complete')go();else addEventListener('load',go)})();
 /* vídeos das divisões (Gemini/Veo, 16/11) */
 (()=>{document.querySelectorAll('.ph[data-img*="div-"]').forEach(el=>{const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='metadata';v.poster=el.dataset.img;v.src=el.dataset.img.replace('.jpg','.mp4');v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';el.querySelector('.ph-in').appendChild(v);el.classList.add('ok');new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?v.play().catch(()=>{}):v.pause())).observe(el)})})();
+/* v4 luxo (conta Pedro, 18/11/2026): mídia por nome de arquivo, galeria horizontal fixada no scroll, vídeo de abertura */
+(()=>{const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('.mv[data-m]').forEach(el=>{const src=el.dataset.m,box=el.querySelector('.ph-in');
+ if(src.endsWith('.mp4')){fetch(src,{method:'HEAD'}).then(r=>{if(!r.ok||!(r.headers.get('content-type')||'').includes('video'))return;const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.preload='metadata';v.src=src;box.appendChild(v);el.classList.add('ok');new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&!red?v.play().catch(()=>{}):v.pause())).observe(el)}).catch(()=>{})}
+ else{const i=new Image();i.onload=()=>{box.style.backgroundImage='url('+src+')';el.classList.add('ok')};i.src=src}});
+
+addEventListener('load',()=>{if(red||!window.gsap||!window.ScrollTrigger||innerWidth<800)return;const t=document.querySelector('.vida-trilho');if(!t)return;
+ gsap.to(t,{x:()=>-(t.scrollWidth-innerWidth+40),ease:'none',scrollTrigger:{trigger:'.vida',start:'top top',end:()=>'+='+(t.scrollWidth),pin:true,scrub:1,invalidateOnRefresh:true}});
+ gsap.from('.tec-t',{y:80,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'.tec',start:'top 60%'}})})})();
